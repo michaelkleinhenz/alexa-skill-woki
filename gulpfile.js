@@ -16,7 +16,7 @@ gulp.task('src', function() {
 });
 
 gulp.task('src-test', function() {
-  return gulp.src('test/**/*.js')
+  return gulp.src('test/**/*')
     .pipe(gulp.dest('dist/test/'));
 });
 
@@ -26,8 +26,8 @@ gulp.task('node-mods', function() {
     .pipe(install({production: true}));
 });
 
-gulp.task('test', function() {
-  return gulp.src(['test/test-*.js'], { read: false })
+gulp.task('run-tests', function() {
+  return gulp.src(['dist/test/test-*.js'], { read: false })
     .pipe(mocha({ reporter: 'spec' }));
 });
 
@@ -41,11 +41,20 @@ gulp.task('upload', function(callback) {
   awsLambda.deploy('./dist.zip', require("./lambda-config.js"), callback);
 });
 
+gulp.task('test', function(callback) {
+  return runSequence(
+    ['clean'],
+    ['src', 'src-test', 'node-mods'],
+    ['run-tests'],
+    callback
+  );
+});
+
 gulp.task('deploy', function(callback) {
   return runSequence(
     ['clean'],
     ['src', 'src-test', 'node-mods'],
-    ['test'],
+    ['run-tests'],
     ['zip'],
     ['upload'],
     callback

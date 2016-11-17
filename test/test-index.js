@@ -1,41 +1,25 @@
 var assert = require('assert');
+var fs = require('fs')
 
-var skill = require("../dist/skill.js");
+var skill = require("../skill.js");
 
-var sampleRequest = {
-  "session": {
-    "sessionId": "SessionId.0123456789",
-        "application": {
-        "applicationId": "amzn1.ask.skill.0123456789"
-    },
-    "attributes": {},
-    "user": {
-        "userId": "amzn1.ask.account.0123456789"
-    },
-    "new": true
-  },
-  "request": {
-    "type": "IntentRequest",
-    "requestId": "EdwRequestId.0123456789",
-    "locale": "de-DE",
-    "timestamp": "2016-11-16T15:00:00Z",
-    "intent": {
-      "name": "ProgrammFuer",
-      "slots": {
-        "Date": {
-          "name": "Date",
-          "value": "2016-11-17"
-        }
-      }
-    }
-  },
-  "version": "1.0"
-};
+var sampleAlexaRequest = require('./sample-alexa-request.json');
+var xmlResponse;
+
+before(function(done) {
+  fs.readFile("./test/sample-response.xml", "utf8", function(err, data) {
+    if (err) throw err;
+      xmlResponse = data;
+    done();
+  });
+});
 
 describe("Alexa Skill", function() {
-  it("should work", function() {
-    skill.handler(sampleRequest, null, function(err, result) {
-      assert.notNull(result);
+  it("should work", function(done) {
+    skill.setMockResponse(xmlResponse);
+    skill.handler(sampleAlexaRequest, null, function(err, result) {
+      assert(result)
+      done();
     });
   });
 });

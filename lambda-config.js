@@ -1,12 +1,12 @@
 
 module.exports = {
-  accessKeyId: "AKIAJENPDRJBPFHM22ZA",
-  secretAccessKey: "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",
+  accessKeyId: process.env.AWS_KEY_ID,
+  secretAccessKey: process.env.AWS_KEY_SECRET,
   //sessionToken: <sessionToken for assuming roles>,  // optional
   //profile: <shared credentials profile name>, // optional for loading AWS credientail from custom profile
   region: 'us-east-1',
   handler: 'index.handler',
-  role: "arn:aws:iam::813226363903:role/service-role/diceRollerRole",
+  role: process.env.AWS_ROLE,
   functionName: "wokiBonnKinoprogramm",
   timeout: 10,
   memorySize: 128,
