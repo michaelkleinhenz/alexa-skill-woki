@@ -1,0 +1,23 @@
+{
+  "description": "A minimal Alexa skill example using Amazon Lambda.",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-install": "^0.6.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-zip": "^3.2.0",
+    "mocha": "^3.1.2",
+    "node-aws-lambda": "^0.1.8",
+    "run-sequence": "^1.2.2"
+  },
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "Michael Kleinhenz",
+      "email": "michael@kleinhenz.net"
+    }
+  ],
+  "name": "alexa-template",
+  "version": "0.0.1",
+  "dependencies": {}
+}
