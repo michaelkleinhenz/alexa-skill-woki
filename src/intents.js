@@ -126,20 +126,23 @@ exports.queryProgramOn = function(movies, intent, session, callback) {
 
 exports.queryRandomMovie = function(movies, intent, session, callback) {
   const cardTitle = intent.name;
-  const shouldEndSession = true;
+  const shouldEndSession = false;
   const timeSlot = exports.calculateTimeSlot(intent.slots.Date, intent.slots.Daytime);
 
-  var sessionAttributes = {};
   var speechOutput = "";
 
   var showtimes = [];
   showtimes.push(cineprog.getRandomMovie(movies, timeSlot.date, timeSlot.interval));
+  var sessionAttributes = { movie: showtimes[0], context: intent.name};
 
   if (showtimes.length==0) {
       speechOutput = "<speak>Für dieses Datum habe ich keine Informationen gefunden.</speak>";
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
-        "Wie wäre es " + exports.getDateSpeech(timeSlot) + " mit", showtimes, ("? " + (showtimes[0].info||"")), false, true
+        "Wie wäre es " + exports.getDateSpeech(timeSlot) + " mit", 
+        showtimes, 
+        ("? " + (showtimes[0].info||"") + " Möchtest du einen Reservierungslink auf dein Smartphone erhalten?"), 
+        false, true
       );
   }
   var repromptText = "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>";
@@ -150,20 +153,22 @@ exports.queryRandomMovie = function(movies, intent, session, callback) {
 
 exports.queryRecommendMovie = function(movies, intent, session, callback) {
   const cardTitle = intent.name;
-  const shouldEndSession = true;
+  const shouldEndSession = false;
   const timeSlot = exports.calculateTimeSlot(intent.slots.Date, intent.slots.Daytime);
 
-  var sessionAttributes = {};
   var speechOutput = "";
 
   var showtimes = [];
   showtimes.push(cineprog.getRandomMovie(movies, timeSlot.date, timeSlot.interval));
+  var sessionAttributes = { movie: showtimes[0], context: intent.name};
 
   if (showtimes.length==0) {
       speechOutput = "<speak>Für dieses Datum habe ich keine Informationen gefunden.</speak>";
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
-        "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + " in", showtimes, ("? " + (showtimes[0].info||"")), false, true
+        "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + " in", 
+        showtimes, ("? " + (showtimes[0].info||"") + " Möchtest du einen Reservierungslink auf dein Smartphone erhalten?"), 
+        false, true
       );
   }
   var repromptText = "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>";
@@ -171,6 +176,21 @@ exports.queryRecommendMovie = function(movies, intent, session, callback) {
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 };
+
+exports.queryYes = function(movies, intent, session, callback) {
+    callback({}, exports.buildSpeechletResponse("Reservierungslink", 
+      "<speak>Ok, du hast jetzt den Reservierungslink auf deinem Smartphone in der Alexa-App.</speak>", 
+      "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
+      true));
+  
+}
+
+exports.queryNo = function(movies, intent, session, callback) {
+    callback({}, exports.buildSpeechletResponse("Ende", 
+      "<speak>Ok.</speak>", 
+      "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
+     true));
+}
 
 exports.queryAboutCinema = function(movies, intent, session, callback) {
     callback({}, exports.buildSpeechletResponse("Über das Woki", 
