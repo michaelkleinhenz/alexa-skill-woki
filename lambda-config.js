@@ -5,7 +5,7 @@ module.exports = {
   //sessionToken: <sessionToken for assuming roles>,  // optional
   //profile: <shared credentials profile name>, // optional for loading AWS credientail from custom profile
   region: 'us-east-1',
-  handler: 'index.handler',
+  handler: 'skill.handler',
   role: process.env.AWS_ROLE,
   functionName: "wokiBonnKinoprogramm",
   timeout: 10,

@@ -6,7 +6,7 @@ exports.speakShowing = function(date) {
         return "";
 }
 
-exports.speakMovie = function(movie) {
+exports.speakMovie = function(movie, noPause) {
     var speechOutput = "" + movie.title + " ";
     if (movie.showings3D.length==0 && movie.showings.length>0) {
         // only 2d
@@ -59,14 +59,22 @@ exports.speakMovie = function(movie) {
                 speechOutput += exports.speakShowing(movie.showings3D[j]) + " ";
         }
     }
-    speechOutput += "<break time='1s'/>";
+    if (!noPause)
+        speechOutput += "<break time='1s'/>";
     return speechOutput;
 };
 
-exports.speakMovieScreenings = function(movies) {
-    var speechOutput = "<speak>Morgen läuft ";
-    for (var i=0; i<movies.length; i++) {
-        speechOutput += exports.speakMovie(movies[i]);
+exports.speakMovieScreenings = function(startPhrase, movies) {
+    var speechOutput = "<speak>" + startPhrase + " ";
+    if (movies.length>1) {
+        for (var i=0; i<movies.length-1; i++) {
+            speechOutput += exports.speakMovie(movies[i]);
+        }
+        speechOutput += " und " + exports.speakMovie(movies[i], true) + ".";
+    } else if (movies.length==1) {
+        speechOutput += exports.speakMovie(movies[i], true) + ".";
+    } else {
+        speechOutput += "leider kein Film im Woki.";
     }
     speechOutput += "</speak>";
     console.log(speechOutput);

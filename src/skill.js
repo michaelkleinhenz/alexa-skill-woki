@@ -70,11 +70,18 @@ function queryShowtimes(movies, intent, session, callback) {
     const shouldEndSession = true;
     var speechOutput = '';
 
+    var currentDate = new Date();
+    if (movies.length==0)
+        speechOutput = "<speak>Ich kann aktuell keine Filminformationen abrufen, versuche es später noch einmal.</speak>";
+
     const dateSlot = intent.slots.Date;
     if (dateSlot) {
         const date = new Date(dateSlot.value);
         var showtimes = cineprog.searchByDay(movies, date);
-        speechOutput = cinespeak.speakMovieScreenings(showtimes);
+        if (showtimes.length==0) {
+            speechOutput = "<speak>Für dieses Datum habe ich keine Informationen gefunden.</speak>";
+        } else
+            speechOutput = cinespeak.speakMovieScreenings("Morgen läuft:", showtimes);
         repromptText = "Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.";
     }
 
