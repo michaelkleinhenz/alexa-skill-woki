@@ -1,0 +1,82 @@
+{
+  "intents": [
+    {
+      "intent": "ProgramOn",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    },
+    {
+      "intent": "RandomMovie",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    },
+    {
+      "intent": "RecommendMovie",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    },
+    {
+      "intent": "NewMovies",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    },
+    {
+      "intent": "AboutCinema",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    },
+    {
+      "intent": "ReservationCinema",
+      "slots": [
+        {
+          "name": "Date",
+          "type": "AMAZON.DATE"
+        },
+        {
+          "name": "Daytime",
+          "type": "DAYTIME"
+        }
+      ]
+    }
+  ]
+}

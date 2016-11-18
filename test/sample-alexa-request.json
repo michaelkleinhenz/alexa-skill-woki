@@ -16,8 +16,12 @@
     "locale": "de-DE",
     "timestamp": "2016-11-16T15:00:00Z",
     "intent": {
-      "name": "ProgrammFuer",
+      "name": "ProgramOn",
       "slots": {
+        "Daytime": {
+          "name": "Daytime",
+          "value": "abend"
+        },
         "Date": {
           "name": "Date",
           "value": "2016-11-18"

@@ -1,0 +1,38 @@
+ProgramOn was läuft {Date} {Daytime}
+ProgramOn was läuft {Date} {Daytime} im Kino
+ProgramOn was {Date} {Daytime} läuft
+ProgramOn was am {Date} läuft
+ProgramOn was am {Date} gezeigt wird
+ProgramOn was {Date} {Daytime} gezeigt wird
+ProgramOn was {Date} {Daytime} im Kino läuft
+ProgramOn was am {Date} im Kino läuft
+ProgramOn was es am {Date} gibt
+ProgramOn was es am {Date} im Kino gibt
+ProgramOn was es am {Date} im Kino zu sehen gibt
+ProgramOn nach dem Programm für {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm für {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm {Date} {Daytime}
+ProgramOn nach den Vorstellungen für {Date} {Daytime}
+ProgramOn nach den Vorstellungen {Date} {Daytime}
+
+RandomMovie nach einem Film
+RandomMovie nach einer Vorstellung
+RandomMovie nach einem zufälligen Film
+RandomMovie nach einer Idee
+RandomMovie nach einem Film für {Date} {Daytime}
+RandomMovie nach einem Film {Date} {Daytime}
+RandomMovie nach einer Idee für {Date} {Daytime}
+RandomMovie nach einer Vorstellung für {Date} {Daytime}
+RandomMovie nach einem zufälligen Film für {Date} {Daytime}
+RandomMovie was ich mir {Date} {Daytime} ansehen kann
+
+RecommendMovie nach einer Empfehlung
+RecommendMovie nach einer Empfehlung für {Date} {Daytime}
+
+NewMovies was es neues gibt
+NewMovies was es {Date} {Daytime} neues gibt
+NewMovies was {Date} anläuft
+
+AboutCinema nach der Adresse
+
+ReservationCinema nach einer Reservierung
