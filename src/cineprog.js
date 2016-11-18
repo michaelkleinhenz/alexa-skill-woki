@@ -118,3 +118,7 @@ exports.searchByDateRange = function(movies, startDate, rangeInMs) {
     return exports.filterShowings(movies, startDate, rangeInMs);
 }
 
+exports.getRandomMovie = function(movies, startDate, rangeInMs) {
+    var movies = exports.filterShowings(movies, startDate, rangeInMs);
+    return randomMovie = movies[Math.floor(Math.random()*(movies.length-1))];
+}
