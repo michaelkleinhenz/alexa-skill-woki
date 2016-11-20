@@ -198,7 +198,7 @@ exports.queryYes = function(movies, intent, session, callback) {
           priorMovie.imageUrl));
     } else if (priorIntent==="RandomMovie") {
         callback({}, exports.buildSpeechletResponse(
-          "Ende", 
+          "\"" + priorMovie.title + "\" im Woki", 
           "<speak>Ok, du kannst die Erinnerung an den Film in der Alexa App ansehen.</speak>", 
           "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
           true,

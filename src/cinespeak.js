@@ -98,7 +98,7 @@ exports.createCardText = function(movie) {
     var speechOutput = "\"" + movie.title + "\" ";
     if (movie.showings3D.length==0 && movie.showings.length>0) {
         // only 2d
-        speechOutput += "um ";
+        speechOutput += "am ";
         for (var j=0; j<movie.showings.length; j++) {
             if (movie.showings.length>1 && j==movie.showings.length-1)
                 speechOutput += "und" + exports.speakShowing(movie.showings[j], true);
@@ -147,7 +147,8 @@ exports.createCardText = function(movie) {
                 speechOutput += exports.speakShowing(movie.showings3D[j], true) + " ";
         }
     }
-    speechOutput += "\n" + movie.info;
+    if (movie.info)
+        speechOutput += "\n" + movie.info;
     speechOutput += "\nWoki Bonn, Bertha-von-Suttner-Platz 1-7, 53111 Bonn";
     speechOutput += "\nTelefon: (0228) 97 68 200, www.woki.de";
     console.log(speechOutput);
