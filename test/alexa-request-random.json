@@ -1,0 +1,31 @@
+{
+  "session": {
+    "sessionId": "SessionId.0123456789",
+        "application": {
+        "applicationId": "amzn1.ask.skill.0123456789"
+    },
+    "attributes": {},
+    "user": {
+        "userId": "amzn1.ask.account.0123456789"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.0123456789",
+    "locale": "de-DE",
+    "timestamp": "2016-11-16T15:00:00Z",
+    "intent": {
+      "name": "RandomMovie",
+      "slots": {
+        "Daytime": {
+          "name": "Daytime"
+        },
+        "Date": {
+          "name": "Date"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

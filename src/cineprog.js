@@ -77,11 +77,13 @@ exports.retrieve = function(cinemaId, isMockXml, callback) {
 };
 
 exports.filterShowings = function(movies, date, rangeInMs) {
-  var result = [];
   if (!rangeInMs)
     rangeInMs = 24*60*60*1000;
+  if (!date)
+    date = new Date();
   var startDate = date.getTime();
   var endDate = startDate + rangeInMs;
+  var result = [];
   //console.log("Filtering start: " + new Date(startDate) + " end: " + new Date(endDate));
   for (var i=0; i<movies.length; i++) {
       var thisMovie = movies[i];

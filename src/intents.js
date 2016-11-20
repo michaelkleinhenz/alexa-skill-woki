@@ -25,7 +25,9 @@ exports.buildSpeechletResponse = function(title, output, repromptText, shouldEnd
 }
 
 exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
-  // TODO: add support for empty dateslot and week dateslots
+  if (!dateSlot.value)
+    return { date: new Date(), interval: 24*60*60*1000, dayTime: "" };
+  // TODO: add support for week dateslots  
   var dateEpoch = new Date(dateSlot.value).getTime();
   var date;
   var interval;
@@ -49,7 +51,7 @@ exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
       date = new Date(dateEpoch);
       interval = 24*60*60*1000;
   }
-  //console.log("Calculated search range, input " + dateSlot.value + " " + daytimeSlot.value + " resolved to: " + date + " interval " + interval + " (" + (interval/1000/60/60) + "h)");
+  console.log("Calculated search range, input " + dateSlot.value + " " + daytimeSlot.value + " resolved to: " + date + " interval " + interval + " (" + (interval/1000/60/60) + "h)");
   return { date: date, interval: interval, dayTime: daytimeSlot.value };
 }
 
@@ -70,6 +72,8 @@ exports.getTimeSpeech = function(dayTime, addS) {
 }
 
 exports.getDateSpeech = function(timeSlot) {
+  if (!timeSlot)
+    return "";
   var today = new Date();
   var phrase = "";  
   if (timeSlot.date.getMonth()==today.getMonth() && timeSlot.date.getYear()==today.getYear()) {
@@ -135,6 +139,7 @@ exports.queryRandomMovie = function(movies, intent, session, callback) {
   var speechOutput = "";
 
   var showtimes = [];
+
   showtimes.push(cineprog.getRandomMovie(movies, timeSlot.date, timeSlot.interval));
   var sessionAttributes = { movie: showtimes[0], context: intent.name};
 
@@ -169,14 +174,12 @@ exports.queryRecommendMovie = function(movies, intent, session, callback) {
       speechOutput = "<speak>Für dieses Datum habe ich keine Empfehlungen gefunden.</speak>";
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
-        "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + " in", 
+        "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + (timeSlot.date?" in":""), 
         showtimes, ("? " + (showtimes[0].info||"") + " Möchtest du eine Erinnerung auf dein Smartphone erhalten?"), 
         false, true
       );
   }
   var repromptText = "<speak>Wenn du eine Erinnerung auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
-
-          cinespeak.createCardText(showtimes[0]);
  
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));

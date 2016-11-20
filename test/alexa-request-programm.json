@@ -16,15 +16,13 @@
     "locale": "de-DE",
     "timestamp": "2016-11-16T15:00:00Z",
     "intent": {
-      "name": "RecommendMovie",
+      "name": "ProgramOn",
       "slots": {
         "Daytime": {
-          "name": "Daytime",
-          "value": "mittag"
+          "name": "Daytime"
         },
         "Date": {
-          "name": "Date",
-          "value": "2016-11-18"
+          "name": "Date"
         }
       }
     }
