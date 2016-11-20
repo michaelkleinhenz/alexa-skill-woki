@@ -221,7 +221,7 @@ exports.queryNo = function(movies, intent, session, callback) {
 
 exports.queryAboutCinema = function(movies, intent, session, callback) {
     callback({}, exports.buildSpeechletResponse("Über das Woki", 
-    "<speak>Das Woki ist das beste Kino in Bonn.</speak>", 
+    "<speak>Das Woki befindet sich in Bonn am Bertha-von-Suttner-Platz Eins. Mit der Stadtbahn einfach an der Station 'Bertha-von-Suttner-Platz' aussteigen. Das Kino befindet sich direkt gegenüber.</speak>", 
     "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
     true));
 };

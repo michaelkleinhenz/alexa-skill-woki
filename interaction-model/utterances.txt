@@ -5,6 +5,8 @@ ProgramOn was am {Date} läuft
 ProgramOn was am {Date} gezeigt wird
 ProgramOn was {Date} {Daytime} gezeigt wird
 ProgramOn was {Date} {Daytime} im Kino läuft
+ProgramOn was {Date} gezeigt wird
+ProgramOn was {Date} im Kino läuft
 ProgramOn was am {Date} im Kino läuft
 ProgramOn was es am {Date} gibt
 ProgramOn was es am {Date} im Kino gibt
