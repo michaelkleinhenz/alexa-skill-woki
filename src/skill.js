@@ -74,9 +74,9 @@ function onIntent(intentRequest, session, callback) {
         } else if (intentName === 'ReservationCinema') {
             intents.queryReservationCinema(movies, intent, session, callback);
         } else if (intentName === 'AMAZON.YesIntent') {
-            intents.queryYes(callback);
+            intents.queryYes(movies, intent, session, callback);
         } else if (intentName === 'AMAZON.NoIntent') {
-            intents.queryNo(callback);
+            intents.queryNo(movies, intent, session, callback);
         } else if (intentName === 'AMAZON.HelpIntent') {
             intents.getWelcomeResponse(callback);
         } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {

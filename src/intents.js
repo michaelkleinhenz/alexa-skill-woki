@@ -47,12 +47,12 @@ exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
       date = new Date(dateEpoch);
       interval = 24*60*60*1000;
   }
-  console.log("Calculated search range, input " + dateSlot.value + " " + daytimeSlot.value + " resolved to: " + date + " interval " + interval + " (" + (interval/1000/60/60) + "h)");
+  //console.log("Calculated search range, input " + dateSlot.value + " " + daytimeSlot.value + " resolved to: " + date + " interval " + interval + " (" + (interval/1000/60/60) + "h)");
   return { date: date, interval: interval, dayTime: daytimeSlot.value };
 }
 
 exports.getTimeSpeech = function(dayTime, addS) {
-  switch (dayTime) {
+  switch (dayTime.trim().toLowerCase()) {
     case "morgen":
     case "morgens":
       return "Morgen" + (addS?"s":"");
@@ -61,7 +61,6 @@ exports.getTimeSpeech = function(dayTime, addS) {
       return "Mittag" + (addS?"s":"");
     case "abend":
     case "abends":
-      console.log("fofof");
       return "Abend" + (addS?"s":"");
   }
 }
@@ -77,7 +76,7 @@ exports.getDateSpeech = function(timeSlot) {
     else if (timeSlot.date.getDay()==today.getDay()+2)
       phrase += "Übermorgen " + exports.getTimeSpeech(timeSlot.dayTime, false);
     else 
-      phrase += "Am " + timeSlot.date.getDay() + ". " + timeSlot.date.getMonth() + " " + exports.getTimeSpeech(timeSlot.dayTime, true);
+      phrase += "Am " + timeSlot.date.getDay() + ". " + timeSlot.date.getMonth() + ". " + exports.getTimeSpeech(timeSlot.dayTime, true);
   }
   return phrase;
 }
@@ -136,7 +135,7 @@ exports.queryRandomMovie = function(movies, intent, session, callback) {
   var sessionAttributes = { movie: showtimes[0], context: intent.name};
 
   if (showtimes.length==0) {
-      speechOutput = "<speak>Für dieses Datum habe ich keine Informationen gefunden.</speak>";
+      speechOutput = "<speak>Im Moment habe ich leider keine Vorschläge. Bitte versuche es später noch einmal.</speak>";
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
         "Wie wäre es " + exports.getDateSpeech(timeSlot) + " mit", 
@@ -145,7 +144,7 @@ exports.queryRandomMovie = function(movies, intent, session, callback) {
         false, true
       );
   }
-  var repromptText = "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>";
+  var repromptText = "<speak>Wenn du einen Reservierungslink auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
  
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
@@ -163,7 +162,7 @@ exports.queryRecommendMovie = function(movies, intent, session, callback) {
   var sessionAttributes = { movie: showtimes[0], context: intent.name};
 
   if (showtimes.length==0) {
-      speechOutput = "<speak>Für dieses Datum habe ich keine Informationen gefunden.</speak>";
+      speechOutput = "<speak>Für dieses Datum habe ich keine Empfehlungen gefunden.</speak>";
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
         "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + " in", 
@@ -171,18 +170,30 @@ exports.queryRecommendMovie = function(movies, intent, session, callback) {
         false, true
       );
   }
-  var repromptText = "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>";
+  var repromptText = "<speak>Wenn du einen Reservierungslink auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
  
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 };
 
 exports.queryYes = function(movies, intent, session, callback) {
-    callback({}, exports.buildSpeechletResponse("Reservierungslink", 
-      "<speak>Ok, du hast jetzt den Reservierungslink auf deinem Smartphone in der Alexa-App.</speak>", 
-      "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
-      true));
-  
+    var priorIntent = session.attributes.context;
+    var priorMovie = session.attributes.movie;
+    if (priorIntent==="RecommendMovie") {
+        callback({}, exports.buildSpeechletResponse("Ende", 
+          "<speak>Ok, du kannst den Link und die Beschreibung des Films in der Alexa App ansehen.</speak>", 
+          "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
+        true));
+    } else if (priorIntent==="RandomMovie") {
+        callback({}, exports.buildSpeechletResponse("Ende", 
+          "<speak>Ok, du kannst den Link und die Beschreibung des Films in der Alexa App ansehen.</speak>", 
+          "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
+        true));
+    } else
+        callback({}, exports.buildSpeechletResponse("Fehler", 
+          "<speak>Ich weiss nicht, was ich tun soll.</speak>", 
+          "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
+          true));  
 }
 
 exports.queryNo = function(movies, intent, session, callback) {

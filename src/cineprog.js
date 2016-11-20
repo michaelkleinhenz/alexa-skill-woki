@@ -31,7 +31,15 @@ exports.parse = function(xmlResponse, callback) {
             case "datum": currentDate=content; break;
             case "zeit": currentMovie.showings.push(new Date(currentDate + " " + content)); break;
             case "fsk": currentMovie.fsk=content; break;
-            case "zusatzinfo": currentMovie.info=content; break;
+            case "zusatzinfo":
+                if (content) {
+                    currentMovie.info=content
+                        .replace(",-", "")
+                        .replace("(2D)", "in 2D")
+                        .replace("(3D)", "in 3D")
+                        .replace(/([1-9]+)[,]?([0-9]*)[-]?([^a-zA-Z]+)/g, '$1 Euro $2 ');
+                }
+                break;
             case "ticketinglink": currentMovie.ticketingLink=content; break;
             case "minuten": currentMovie.runtime=parseInt(content||0); break;
             case "programm_ab": currentMovie.programstart=new Date(content);
@@ -73,7 +81,7 @@ exports.filterShowings = function(movies, date, rangeInMs) {
     rangeInMs = 24*60*60*1000;
   var startDate = date.getTime();
   var endDate = startDate + rangeInMs;
-  console.log("Filtering start: " + new Date(startDate) + " end: " + new Date(endDate));
+  //console.log("Filtering start: " + new Date(startDate) + " end: " + new Date(endDate));
   for (var i=0; i<movies.length; i++) {
       var thisMovie = movies[i];
       var movieResult = {
@@ -89,8 +97,8 @@ exports.filterShowings = function(movies, date, rangeInMs) {
           var thisShowing = thisMovie.showings[j];
           if (thisShowing.getDay()==date.getDay() && thisShowing.getMonth()==date.getMonth() && thisShowing.getYear()==date.getYear())
               if (rangeInMs && thisShowing.getTime()>=startDate && thisShowing.getTime()<endDate) {
-                  console.log("Found 2D showing matching filter: " + thisMovie.title + " at " + thisShowing);
-                  console.log("Data: " + rangeInMs + " - " + thisShowing.getTime() + " - " + startDate);
+                  //console.log("Found 2D showing matching filter: " + thisMovie.title + " at " + thisShowing);
+                  //console.log("Data: " + rangeInMs + " - " + thisShowing.getTime() + " - " + startDate);
                   movieResult.showings.push(thisShowing);
               }
       }
@@ -99,7 +107,7 @@ exports.filterShowings = function(movies, date, rangeInMs) {
             var thisShowing = thisMovie.showings3D[j];
             if (thisShowing.getDay()==date.getDay() && thisShowing.getMonth()==date.getMonth() && thisShowing.getYear()==date.getYear())
                 if (rangeInMs && thisShowing.getTime()>=startDate && thisShowing.getTime()<endDate) {
-                    console.log("Found 3D showing matching filter: " + thisMovie.title + " at " + thisShowing);
+                    //console.log("Found 3D showing matching filter: " + thisMovie.title + " at " + thisShowing);
                     movieResult.showings3D.push(thisShowing);
                 }
         }
