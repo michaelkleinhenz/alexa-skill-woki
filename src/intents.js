@@ -187,7 +187,7 @@ exports.queryYes = function(movies, intent, session, callback) {
     var priorMovie = session.attributes.movie;
     if (priorIntent==="RecommendMovie") {
         callback({}, exports.buildSpeechletResponse(
-          priorMovie.title + " im Woki", 
+          "\"" + priorMovie.title + "\" im Woki", 
           "<speak>Ok, du kannst die Erinnerung an den Film in der Alexa App ansehen.</speak>", 
           "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
           true,
