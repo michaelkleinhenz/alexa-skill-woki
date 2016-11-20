@@ -1,7 +1,14 @@
 
-exports.speakShowing = function(date) {
-    if (date)
-        return date.getHours() + " Uhr" + (date.getMinutes()===0?"":" "+date.getMinutes());
+exports.speakShowing = function(date, doDay) {
+    if (date) {
+        if (typeof date=="string")
+            date = new Date(date);
+        var result = "";
+        if (doDay)
+            result += date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " um ";
+        result += date.getHours() + " Uhr" + (date.getMinutes()===0?"":" "+date.getMinutes());
+        return result;
+    }
     else
         return "";
 }
@@ -87,3 +94,62 @@ exports.speakMovieScreenings = function(startPhrase, movies, endPhrase, addDot, 
     return speechOutput;
 };
 
+exports.createCardText = function(movie) {
+    var speechOutput = "\"" + movie.title + "\" ";
+    if (movie.showings3D.length==0 && movie.showings.length>0) {
+        // only 2d
+        speechOutput += "um ";
+        for (var j=0; j<movie.showings.length; j++) {
+            if (movie.showings.length>1 && j==movie.showings.length-1)
+                speechOutput += "und" + exports.speakShowing(movie.showings[j], true);
+            else if (movie.showings.length>1 && j==movie.showings.length-2)
+                speechOutput += exports.speakShowing(movie.showings[j], true) + " ";
+            else if (movie.showings.length>1)
+                speechOutput += exports.speakShowing(movie.showings[j], true) + ", ";
+            else
+                speechOutput += exports.speakShowing(movie.showings[j], true) + " ";
+        }
+    } else if (movie.showings3D.length>0 && movie.showings.length==0) {
+        // only 3d
+        speechOutput += "in 3D am ";
+        for (var j=0; j<movie.showings3D.length; j++) {
+            if (movie.showings3D.length>1 && j==movie.showings3D.length-1)
+                speechOutput += "und" + exports.speakShowing(movie.showings3D[j], true);
+            else if (movie.showings3D.length>1 && j==movie.showings3D.length-2)
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + " ";
+            else if (movie.showings3D.length>1)
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + ", ";
+            else                
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + " ";
+        }
+    } else {
+        // both 2d and 3d
+        speechOutput += "in 2D am ";
+        for (var j=0; j<movie.showings.length; j++) {
+            if (movie.showings.length>1 && j==movie.showings.length-1)
+                speechOutput += "und" + exports.speakShowing(movie.showings[j], true);
+            else if (movie.showings.length>1 && j==movie.showings.length-2)
+                speechOutput += exports.speakShowing(movie.showings[j], true) + " ";
+            else if (movie.showings.length>1)
+                speechOutput += exports.speakShowing(movie.showings[j], true) + ", ";
+            else
+                speechOutput += exports.speakShowing(movie.showings[j], true) + " ";
+        }
+        speechOutput += "und" + " in 3D am ";
+        for (var j=0; j<movie.showings3D.length; j++) {
+            if (movie.showings3D.length>1 && j==movie.showings3D.length-1)
+                speechOutput += "und" + exports.speakShowing(movie.showings3D[j], true);
+            else if (movie.showings3D.length>1 && j==movie.showings3D.length-2)
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + " ";
+            else if (movie.showings3D.length>1)
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + ", ";
+            else                
+                speechOutput += exports.speakShowing(movie.showings3D[j], true) + " ";
+        }
+    }
+    speechOutput += "\n" + movie.info;
+    speechOutput += "\nWoki Bonn, Bertha-von-Suttner-Platz 1-7, 53111 Bonn";
+    speechOutput += "\nTelefon: (0228) 97 68 200, www.woki.de";
+    console.log(speechOutput);
+    return speechOutput;
+}

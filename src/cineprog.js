@@ -41,6 +41,7 @@ exports.parse = function(xmlResponse, callback) {
                 }
                 break;
             case "ticketinglink": currentMovie.ticketingLink=content; break;
+            case "poster": currentMovie.imageUrl=content; break;
             case "minuten": currentMovie.runtime=parseInt(content||0); break;
             case "programm_ab": currentMovie.programstart=new Date(content);
         }
@@ -89,13 +90,14 @@ exports.filterShowings = function(movies, date, rangeInMs) {
           fsk:thisMovie.fsk,
           info:thisMovie.info,
           ticketingLink:thisMovie.ticketingLink,
+          imageUrl:thisMovie.imageUrl,
           runtime:thisMovie.runtime,
           showings:[],
           showings3D:[]
       };
       for (var j=0; j<thisMovie.showings.length; j++) {
           var thisShowing = thisMovie.showings[j];
-          if (thisShowing.getDay()==date.getDay() && thisShowing.getMonth()==date.getMonth() && thisShowing.getYear()==date.getYear())
+          if (thisShowing.getDate()==date.getDate() && thisShowing.getMonth()==date.getMonth() && thisShowing.getFullYear()==date.getFullYear())
               if (rangeInMs && thisShowing.getTime()>=startDate && thisShowing.getTime()<endDate) {
                   //console.log("Found 2D showing matching filter: " + thisMovie.title + " at " + thisShowing);
                   //console.log("Data: " + rangeInMs + " - " + thisShowing.getTime() + " - " + startDate);
@@ -105,7 +107,7 @@ exports.filterShowings = function(movies, date, rangeInMs) {
       if (thisMovie.showings3D)
         for (j=0; j<thisMovie.showings3D.length; j++) {
             var thisShowing = thisMovie.showings3D[j];
-            if (thisShowing.getDay()==date.getDay() && thisShowing.getMonth()==date.getMonth() && thisShowing.getYear()==date.getYear())
+            if (thisShowing.getDate()==date.getDate() && thisShowing.getMonth()==date.getMonth() && thisShowing.getFullYear()==date.getFullYear())
                 if (rangeInMs && thisShowing.getTime()>=startDate && thisShowing.getTime()<endDate) {
                     //console.log("Found 3D showing matching filter: " + thisMovie.title + " at " + thisShowing);
                     movieResult.showings3D.push(thisShowing);

@@ -1,25 +1,27 @@
 var cineprog = require('./cineprog');
 var cinespeak = require('./cinespeak');
 
-exports.buildSpeechletResponse = function(title, output, repromptText, shouldEndSession) {
-  return {
+exports.buildSpeechletResponse = function(title, output, repromptText, shouldEndSession, cardText, cardImageUrl) {
+  var response = {
       outputSpeech: {
-          type: 'SSML',
-          ssml: output
-      },
-      card: {
-          type: 'Simple',
-          title: 'SessionSpeechlet - ' + title,
-          content: 'SessionSpeechlet - ' + output
+        type: 'SSML',
+        ssml: output
       },
       reprompt: {
-          outputSpeech: {
-              type: 'SSML',
-              text: repromptText
-          }
+        outputSpeech: {
+          type: 'SSML',
+          text: repromptText
+        }
       },
       shouldEndSession: shouldEndSession
   };
+  if (cardText) 
+    response.card = {
+        "type": "Simple",
+        "title": title,
+        "content": cardText,
+    };
+  return response;
 }
 
 exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
@@ -52,31 +54,33 @@ exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
 }
 
 exports.getTimeSpeech = function(dayTime, addS) {
-  switch (dayTime.trim().toLowerCase()) {
-    case "morgen":
-    case "morgens":
-      return "Morgen" + (addS?"s":"");
-    case "mittag":
-    case "mittags":
-      return "Mittag" + (addS?"s":"");
-    case "abend":
-    case "abends":
-      return "Abend" + (addS?"s":"");
-  }
+  if (dayTime)
+    switch (dayTime.toLowerCase()) {
+      case "morgen":
+      case "morgens":
+        return "Morgen" + (addS?"s":"");
+      case "mittag":
+      case "mittags":
+        return "Mittag" + (addS?"s":"");
+      case "abend":
+      case "abends":
+        return "Abend" + (addS?"s":"");
+    }
+  return "";
 }
 
 exports.getDateSpeech = function(timeSlot) {
   var today = new Date();
   var phrase = "";  
   if (timeSlot.date.getMonth()==today.getMonth() && timeSlot.date.getYear()==today.getYear()) {
-    if (timeSlot.date.getDay()==today.getDay())
+    if (timeSlot.date.getDate()==today.getDate())
       phrase += "Heute " + exports.getTimeSpeech(timeSlot.dayTime, false);
-    else if (timeSlot.date.getDay()==today.getDay()+1)
+    else if (timeSlot.date.getDate()==today.getDate()+1)
       phrase += "Morgen " + exports.getTimeSpeech(timeSlot.dayTime, false);
-    else if (timeSlot.date.getDay()==today.getDay()+2)
+    else if (timeSlot.date.getDate()==today.getDate()+2)
       phrase += "Übermorgen " + exports.getTimeSpeech(timeSlot.dayTime, false);
     else 
-      phrase += "Am " + timeSlot.date.getDay() + ". " + timeSlot.date.getMonth() + ". " + exports.getTimeSpeech(timeSlot.dayTime, true);
+      phrase += "Am " + timeSlot.date.getDate() + ". " + timeSlot.date.getMonth() + ". " + exports.getTimeSpeech(timeSlot.dayTime, true);
   }
   return phrase;
 }
@@ -140,11 +144,11 @@ exports.queryRandomMovie = function(movies, intent, session, callback) {
       speechOutput = cinespeak.speakMovieScreenings(
         "Wie wäre es " + exports.getDateSpeech(timeSlot) + " mit", 
         showtimes, 
-        ("? " + (showtimes[0].info||"") + " Möchtest du einen Reservierungslink auf dein Smartphone erhalten?"), 
+        ("? " + (showtimes[0].info?showtimes[0].info:"") + " Möchtest du eine Erinnerung auf dein Smartphone erhalten?"), 
         false, true
       );
   }
-  var repromptText = "<speak>Wenn du einen Reservierungslink auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
+  var repromptText = "<speak>Wenn du eine Erinnerung auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
  
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
@@ -166,11 +170,13 @@ exports.queryRecommendMovie = function(movies, intent, session, callback) {
   } else {
       speechOutput = cinespeak.speakMovieScreenings(
         "Das Woki empfiehlt: " + exports.getDateSpeech(timeSlot) + " in", 
-        showtimes, ("? " + (showtimes[0].info||"") + " Möchtest du einen Reservierungslink auf dein Smartphone erhalten?"), 
+        showtimes, ("? " + (showtimes[0].info||"") + " Möchtest du eine Erinnerung auf dein Smartphone erhalten?"), 
         false, true
       );
   }
-  var repromptText = "<speak>Wenn du einen Reservierungslink auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
+  var repromptText = "<speak>Wenn du eine Erinnerung auf dein Smartphone erhalten möchtest, sag 'Ja', ansonsten 'Nein' oder 'Abbrechen'.</speak>";
+
+          cinespeak.createCardText(showtimes[0]);
  
   callback(sessionAttributes,
       exports.buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
@@ -180,17 +186,24 @@ exports.queryYes = function(movies, intent, session, callback) {
     var priorIntent = session.attributes.context;
     var priorMovie = session.attributes.movie;
     if (priorIntent==="RecommendMovie") {
-        callback({}, exports.buildSpeechletResponse("Ende", 
-          "<speak>Ok, du kannst den Link und die Beschreibung des Films in der Alexa App ansehen.</speak>", 
+        callback({}, exports.buildSpeechletResponse(
+          priorMovie.title + " im Woki", 
+          "<speak>Ok, du kannst die Erinnerung an den Film in der Alexa App ansehen.</speak>", 
           "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
-        true));
+          true,
+          cinespeak.createCardText(priorMovie),
+          priorMovie.imageUrl));
     } else if (priorIntent==="RandomMovie") {
-        callback({}, exports.buildSpeechletResponse("Ende", 
-          "<speak>Ok, du kannst den Link und die Beschreibung des Films in der Alexa App ansehen.</speak>", 
+        callback({}, exports.buildSpeechletResponse(
+          "Ende", 
+          "<speak>Ok, du kannst die Erinnerung an den Film in der Alexa App ansehen.</speak>", 
           "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
-        true));
+          true,
+          cinespeak.createCardText(priorMovie),
+          priorMovie.imageUrl));
     } else
-        callback({}, exports.buildSpeechletResponse("Fehler", 
+        callback({}, exports.buildSpeechletResponse(
+          "Fehler", 
           "<speak>Ich weiss nicht, was ich tun soll.</speak>", 
           "<speak>Du kannst mich nach dem Programm fragen, in dem du 'was läuft morgen abend' sagst.</speak>", 
           true));  

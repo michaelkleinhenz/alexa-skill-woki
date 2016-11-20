@@ -19,11 +19,6 @@ function buildErrorResponse() {
           type: 'SSML',
           ssml: "<speak>Ich kann aktuell keine Filminformationen abrufen, versuche es später noch einmal.</speak>"
       },
-      card: {
-          type: 'Simple',
-          title: "Fehler",
-          content: "Fehler"
-      },
       reprompt: {
           outputSpeech: {
               type: 'PlainText',
