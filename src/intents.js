@@ -2,8 +2,6 @@ var cineprog = require('./cineprog');
 var cinespeak = require('./cinespeak');
 
 exports.buildSpeechletResponse = function(title, output, repromptText, shouldEndSession, cardText, cardImageUrl) {
-  console.log(output);
-  console.log(repromptText);
   var response = {
       outputSpeech: {
         type: "SSML",
@@ -28,11 +26,9 @@ exports.buildSpeechletResponse = function(title, output, repromptText, shouldEnd
 }
 
 exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
-  console.log(dateSlot);
-  console.log(daytimeSlot);
   if (!dateSlot.value)
     return { date: new Date(), interval: 24*60*60*1000, dayTime: "" };
-  // TODO: add support for week dateslots  
+  // TODO: add support for week dateslots "2016-W48"  
   var dateEpoch = new Date(dateSlot.value).getTime();
   var date;
   var interval;
@@ -88,8 +84,24 @@ exports.getDateSpeech = function(timeSlot) {
       phrase += "Morgen " + exports.getTimeSpeech(timeSlot.dayTime, false);
     else if (timeSlot.date.getDate()==today.getDate()+2)
       phrase += "Übermorgen " + exports.getTimeSpeech(timeSlot.dayTime, false);
-    else 
-      phrase += "Am " + timeSlot.date.getDate() + ". " + timeSlot.date.getMonth() + ". " + exports.getTimeSpeech(timeSlot.dayTime, true);
+    else {
+      var month = "";
+      switch (timeSlot.date.getMonth()) {
+        case 1: month = "Januar"; break;
+        case 2: month = "Februar"; break;
+        case 3: month = "März"; break;
+        case 4: month = "April"; break;
+        case 5: month = "Mai"; break;
+        case 6: month = "Juni"; break;
+        case 7: month = "Juli"; break;
+        case 8: month = "August"; break;
+        case 9: month = "September"; break;
+        case 10: month = "Oktober"; break;
+        case 11: month = "November"; break;
+        case 12: month = "Dezember"; break;
+      }
+      phrase += "Am " + timeSlot.date.getDate() + ". " + month + " " + exports.getTimeSpeech(timeSlot.dayTime, true);
+    }
   }
   return phrase;
 }
