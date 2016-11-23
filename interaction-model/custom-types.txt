@@ -1,7 +1,1 @@
-DAYTIME	
-morgens
-morgen
-abend
-abends
-nachmittag
-nachmittags
+DAYTIME	abend | abends | mittag | mittags

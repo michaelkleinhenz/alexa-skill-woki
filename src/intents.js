@@ -2,20 +2,23 @@ var cineprog = require('./cineprog');
 var cinespeak = require('./cinespeak');
 
 exports.buildSpeechletResponse = function(title, output, repromptText, shouldEndSession, cardText, cardImageUrl) {
+  console.log(output);
+  console.log(repromptText);
   var response = {
       outputSpeech: {
-        type: 'SSML',
+        type: "SSML",
         ssml: output
-      },
-      reprompt: {
-        outputSpeech: {
-          type: 'SSML',
-          text: repromptText
-        }
       },
       shouldEndSession: shouldEndSession
   };
-  if (cardText) 
+  if (typeof repromptText!="undefined" && repromptText!=null)
+    response.reprompt = {
+        outputSpeech: {
+          type: "SSML",
+          ssml: repromptText
+        }
+    };
+  if (typeof cardText!="undefined" && cardText!=null) 
     response.card = {
         "type": "Simple",
         "title": title,
@@ -25,6 +28,8 @@ exports.buildSpeechletResponse = function(title, output, repromptText, shouldEnd
 }
 
 exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
+  console.log(dateSlot);
+  console.log(daytimeSlot);
   if (!dateSlot.value)
     return { date: new Date(), interval: 24*60*60*1000, dayTime: "" };
   // TODO: add support for week dateslots  
@@ -90,13 +95,14 @@ exports.getDateSpeech = function(timeSlot) {
 }
 
 exports.getWelcomeResponse = function(callback) {
+  console.log("Returning welcome message.");
   // If we wanted to initialize the session to have some attributes we could add those here.
   const sessionAttributes = {};
   const cardTitle = "Wilkommen";
-  const speechOutput = "<speak>Willkommen zum Kinoprogramm des Woki Kinos in Bonn. Du kannst mich nach dem Kinoprogramm an einem bestimmten Tag fragen.</speak>";
+  const speechOutput = "<speak>Willkommen zum Kinoprogramm des Woki Kinos in Bonn. Für wann möchtest du das Kinoprogramm wissen?</speak>";
   // If the user either does not reply to the welcome message or says something that is not
   // understood, they will be prompted again with this text.
-  const repromptText = "<speak>Frage mich nach dem Programm an einem bestimmten Tag, in dem du Was läuft morgen im Woki sagst</speak>";
+  const repromptText = "<speak>Du kannst mich nach dem Kinoprogramm für einen bestimmten Tag fragen, in dem du zum Beispiel 'morgen abend' sagst.</speak>";
   const shouldEndSession = false;
 
   callback(sessionAttributes,

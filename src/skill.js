@@ -37,7 +37,7 @@ function onSessionStarted(sessionStartedRequest, session) {
 // Called when the user launches the skill without specifying what they want.
 function onLaunch(launchRequest, session, callback) {
     console.log("Skill launched without intent for session " + session.sessionId);
-    getWelcomeResponse(callback);
+    intents.getWelcomeResponse(callback);
 }
 
 //Called when the user specifies an intent for this skill.
@@ -77,7 +77,7 @@ function onIntent(intentRequest, session, callback) {
         } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
             intents.handleSessionEndRequest(callback);
         } else {
-            throw new Error('Invalid intent');
+            intents.getWelcomeResponse(callback);
         }
     });
 }

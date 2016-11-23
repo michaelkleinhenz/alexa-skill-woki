@@ -1,3 +1,5 @@
+ProgramOn {Date} {Daytime}
+ProgramOn {Date}
 ProgramOn was läuft {Date} {Daytime}
 ProgramOn was läuft {Date} {Daytime} im Kino
 ProgramOn was {Date} {Daytime} läuft
@@ -36,5 +38,9 @@ NewMovies was es {Date} {Daytime} neues gibt
 NewMovies was {Date} anläuft
 
 AboutCinema nach der Adresse
+AboutCinema nach der Adresse {Date}
+AboutCinema nach der Adresse {Date} {Daytime}
 
 ReservationCinema nach einer Reservierung
+ReservationCinema nach einer Reservierung {Date} 
+ReservationCinema nach einer Reservierung {Date} {Daytime}
