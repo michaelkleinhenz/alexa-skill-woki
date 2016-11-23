@@ -1,37 +1,102 @@
 ProgramOn {Date} {Daytime}
 ProgramOn {Date}
+ProgramOn nächsten {Date} {Daytime}
+ProgramOn nächsten {Date}
+
 ProgramOn was läuft {Date} {Daytime}
+ProgramOn was läuft {Date} am {Daytime}
 ProgramOn was läuft {Date} {Daytime} im Kino
+ProgramOn was läuft {Date} am {Daytime} im Kino
+ProgramOn was läuft nächsten {Date} {Daytime}
+ProgramOn was läuft nächsten {Date} am {Daytime}
+ProgramOn was läuft am nächsten {Date} {Daytime}
+ProgramOn was läuft am nächsten {Date} am {Daytime}
+ProgramOn was läuft am nächsten {Date}
+
 ProgramOn was {Date} {Daytime} läuft
+ProgramOn was nächsten {Date} {Daytime} läuft
+ProgramOn was nächsten {Date} am {Daytime} läuft
+ProgramOn was am nächsten {Date} {Daytime} läuft
+ProgramOn was am nächsten {Date} am {Daytime} läuft
 ProgramOn was am {Date} läuft
-ProgramOn was am {Date} gezeigt wird
-ProgramOn was {Date} {Daytime} gezeigt wird
+ProgramOn was am nächsten {Date} läuft
+
 ProgramOn was {Date} {Daytime} im Kino läuft
-ProgramOn was {Date} gezeigt wird
+ProgramOn was {Date} am {Daytime} im Kino läuft
+ProgramOn was nächsten {Date} {Daytime} im Kino läuft
+ProgramOn was nächsten {Date} am {Daytime} im Kino läuft
 ProgramOn was {Date} im Kino läuft
+ProgramOn was nächsten {Date} im Kino läuft
 ProgramOn was am {Date} im Kino läuft
+ProgramOn was am nächsten {Date} im Kino läuft
+
+
+
+ProgramOn was am {Date} gezeigt wird
+ProgramOn was am nächsten {Date} gezeigt wird
+ProgramOn was {Date} {Daytime} gezeigt wird
+ProgramOn was {Date} am {Daytime} gezeigt wird
+ProgramOn was nächsten {Date} {Daytime} gezeigt wird
+ProgramOn was nächsten {Date} am {Daytime} gezeigt wird
+ProgramOn was {Date} gezeigt wird
+ProgramOn was nächsten {Date} gezeigt wird
+
 ProgramOn was es am {Date} gibt
 ProgramOn was es am {Date} im Kino gibt
 ProgramOn was es am {Date} im Kino zu sehen gibt
+
 ProgramOn nach dem Programm für {Date} {Daytime}
+ProgramOn nach dem Programm für {Date} am {Daytime}
+
 ProgramOn nach dem Kinoprogramm für {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm für {Date} am {Daytime}
 ProgramOn nach dem Kinoprogramm {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm {Date} am {Daytime}
+ProgramOn nach dem Kinoprogramm am {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm am {Date} am {Daytime}
+ProgramOn nach dem Kinoprogramm am {Date} {Daytime}
+ProgramOn nach dem Kinoprogramm am {Date} am {Daytime}
+
 ProgramOn nach den Vorstellungen für {Date} {Daytime}
+ProgramOn nach den Vorstellungen für {Date} am {Daytime}
+ProgramOn nach den Vorstellungen für den {Date} {Daytime}
+ProgramOn nach den Vorstellungen für den {Date} am {Daytime}
 ProgramOn nach den Vorstellungen {Date} {Daytime}
+ProgramOn nach den Vorstellungen {Date} am {Daytime}
+ProgramOn nach den Vorstellungen am {Date} {Daytime}
+ProgramOn nach den Vorstellungen am {Date} am {Daytime}
 
 RandomMovie nach einem Film
 RandomMovie nach einer Vorstellung
 RandomMovie nach einem zufälligen Film
 RandomMovie nach einer Idee
 RandomMovie nach einem Film für {Date} {Daytime}
+RandomMovie nach einem Film für den {Date} {Daytime}
+RandomMovie nach einem Film für {Date} am {Daytime}
+RandomMovie nach einem Film für den {Date} am {Daytime}
 RandomMovie nach einem Film {Date} {Daytime}
+RandomMovie nach einem Film am {Date} {Daytime}
+RandomMovie nach einem Film am {Date} am {Daytime}
 RandomMovie nach einer Idee für {Date} {Daytime}
+RandomMovie nach einer Idee für den {Date} {Daytime}
+RandomMovie nach einer Idee für den {Date} am {Daytime}
 RandomMovie nach einer Vorstellung für {Date} {Daytime}
+RandomMovie nach einer Vorstellung für {Date} am {Daytime}
+RandomMovie nach einer Vorstellung für den {Date} {Daytime}
+RandomMovie nach einer Vorstellung für den {Date} am {Daytime}
 RandomMovie nach einem zufälligen Film für {Date} {Daytime}
+RandomMovie nach einem zufälligen Film für den {Date} {Daytime}
+RandomMovie nach einem zufälligen Film für den {Date} am {Daytime}
 RandomMovie was ich mir {Date} {Daytime} ansehen kann
+RandomMovie was ich mir am {Date} {Daytime} ansehen kann
+RandomMovie was ich mir {Date} am {Daytime} ansehen kann
+RandomMovie was ich mir am {Date} am {Daytime} ansehen kann
 
 RecommendMovie nach einer Empfehlung
 RecommendMovie nach einer Empfehlung für {Date} {Daytime}
+RecommendMovie nach einer Empfehlung für {Date} am {Daytime}
+RecommendMovie nach einer Empfehlung für den {Date} {Daytime}
+RecommendMovie nach einer Empfehlung für den {Date} am {Daytime}
 
 NewMovies was es neues gibt
 NewMovies was es {Date} {Daytime} neues gibt
