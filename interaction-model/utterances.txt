@@ -30,8 +30,6 @@ ProgramOn was nächsten {Date} im Kino läuft
 ProgramOn was am {Date} im Kino läuft
 ProgramOn was am nächsten {Date} im Kino läuft
 
-
-
 ProgramOn was am {Date} gezeigt wird
 ProgramOn was am nächsten {Date} gezeigt wird
 ProgramOn was {Date} {Daytime} gezeigt wird
