@@ -95,6 +95,10 @@ exports.setMockResponse = function(responseXml) {
     mockResponse = responseXml;
 }
 
+exports.isUnderTest = function() {
+    return (typeof mockResponse!="undefined" && mockResponse!=null);
+}
+
 exports.handler = function(event, context, callback) {
     try {
         if (event.session.new) {

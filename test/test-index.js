@@ -75,7 +75,6 @@ describe("Random Movie", function() {
     });
   });
 });
-
 describe("Recommend Movie", function() {
   it("should work for unspecified dates.", function(done) {
     skill.setMockResponse(xmlResponse);

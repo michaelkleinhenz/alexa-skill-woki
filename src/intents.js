@@ -1,5 +1,6 @@
 var cineprog = require('./cineprog');
 var cinespeak = require('./cinespeak');
+var skill = require('./skill');
 
 exports.buildSpeechletResponse = function(title, output, repromptText, shouldEndSession, cardText, cardImageUrl) {
   var response = {
@@ -26,8 +27,9 @@ exports.buildSpeechletResponse = function(title, output, repromptText, shouldEnd
 }
 
 exports.calculateTimeSlot = function(dateSlot, daytimeSlot) {
+  var today = skill.isUnderTest()?new Date("2016-11-18"):new Date();
   if (!dateSlot.value)
-    return { date: new Date(), interval: 24*60*60*1000, dayTime: "" };
+    return { date: today, interval: 24*60*60*1000, dayTime: "" };
   // TODO: add support for week dateslots "2016-W48"  
   var dateEpoch = new Date(dateSlot.value).getTime();
   var date;
@@ -75,7 +77,7 @@ exports.getTimeSpeech = function(dayTime, addS) {
 exports.getDateSpeech = function(timeSlot) {
   if (!timeSlot)
     return "";
-  var today = new Date();
+  var today = skill.isUnderTest()?new Date("2016-11-18"):new Date();
   var phrase = "";  
   if (timeSlot.date.getMonth()==today.getMonth() && timeSlot.date.getYear()==today.getYear()) {
     if (timeSlot.date.getDate()==today.getDate())
