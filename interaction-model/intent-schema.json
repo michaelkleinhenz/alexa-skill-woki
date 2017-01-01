@@ -40,19 +40,6 @@
       ]
     },
     {
-      "intent": "NewMovies",
-      "slots": [
-        {
-          "name": "Date",
-          "type": "AMAZON.DATE"
-        },
-        {
-          "name": "Daytime",
-          "type": "DAYTIME"
-        }
-      ]
-    },
-    {
       "intent": "AboutCinema",
       "slots": [
         {
@@ -79,14 +66,19 @@
       ]
     },
     {
-      "intent": "AMAZON.YesIntent",
-      "slots": [
-      ]
+      "intent": "AMAZON.YesIntent"
     },
     {
-      "intent": "AMAZON.NoIntent",
-      "slots": [
-      ]
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
     }
   ]
 }

@@ -108,6 +108,20 @@ exports.getDateSpeech = function(timeSlot) {
   return phrase;
 }
 
+exports.getHelpResponse = function(callback) {
+  console.log("Returning help message.");
+  // If we wanted to initialize the session to have some attributes we could add those here.
+  const sessionAttributes = {};
+  const speechOutput = "<speak>Du kannst mich nach dem Kinoprogramm für einen bestimmten Tag fragen, in dem du zum Beispiel 'morgen abend' sagst.</speak>";
+  // If the user either does not reply to the welcome message or says something that is not
+  // understood, they will be prompted again with this text.
+  const repromptText = "<speak>Du kannst mich nach dem Kinoprogramm für einen bestimmten Tag fragen, in dem du zum Beispiel 'morgen abend' sagst.</speak>";
+  const shouldEndSession = false;
+
+  callback(sessionAttributes,
+      exports.buildSpeechletResponse(null, speechOutput, repromptText, shouldEndSession));
+}
+
 exports.getWelcomeResponse = function(callback) {
   console.log("Returning welcome message.");
   // If we wanted to initialize the session to have some attributes we could add those here.

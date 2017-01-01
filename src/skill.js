@@ -73,7 +73,7 @@ function onIntent(intentRequest, session, callback) {
         } else if (intentName === 'AMAZON.NoIntent') {
             intents.queryNo(movies, intent, session, callback);
         } else if (intentName === 'AMAZON.HelpIntent') {
-            intents.getWelcomeResponse(callback);
+            intents.getHelpResponse(callback);
         } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
             intents.handleSessionEndRequest(callback);
         } else {

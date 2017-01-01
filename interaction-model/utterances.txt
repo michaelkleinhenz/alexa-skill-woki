@@ -96,10 +96,6 @@ RecommendMovie nach einer Empfehlung für {Date} am {Daytime}
 RecommendMovie nach einer Empfehlung für den {Date} {Daytime}
 RecommendMovie nach einer Empfehlung für den {Date} am {Daytime}
 
-NewMovies was es neues gibt
-NewMovies was es {Date} {Daytime} neues gibt
-NewMovies was {Date} anläuft
-
 AboutCinema nach der Adresse
 AboutCinema nach der Adresse {Date}
 AboutCinema nach der Adresse {Date} {Daytime}

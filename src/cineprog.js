@@ -50,7 +50,7 @@ exports.parse = function(xmlResponse, callback) {
   while (k--) {
     var thisMovie = movies3D[movies3D.length-1];
     for (var l=0; l<movies.length; l++) {
-        if (movies[l].title==movies3D[movies3D.length-1].title) {
+        if (movies3D.length>0 && movies[l].title==movies3D[movies3D.length-1].title) {
             movies[l].showings3D = thisMovie.showings3D;
             movies3D.splice(movies3D.length-1, 1);
         }
